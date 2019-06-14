@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import count_action from './action/count-action'
 
-function App() {
+
+let App = props => {
+  console.log(props)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        onClick={()=>{
+          props.increaseCount()
+        }}
+      >Press Me</button>
+      <div>{props.countcount}</div>
+      <div
+        style={{
+          width:"200px",
+          height: "200px",
+        }}
+      ></div>
     </div>
   );
 }
+
+let mapStateToProps = state => {
+  return {
+    countcount: state.count
+  }
+}
+
+let mapDispatchToProps = dispatch => bindActionCreators({
+  increaseCount: count_action
+}, dispatch)
+
+App = connect(mapStateToProps, mapDispatchToProps)(App)
 
 export default App;
